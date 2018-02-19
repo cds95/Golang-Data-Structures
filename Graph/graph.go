@@ -113,18 +113,3 @@ func (g *Graph) DFS(start Vertex) {
     }
   }
 }
-
-/*
-  Runs the topological sort algorithm from the given start vertex and returns
-  true if algorithm is successful.  Algorithm will fail if the graph is not
-  a DAG
-*/
-func (g *Graph) TopoSort(start Vertex) bool {
-  seen := make(map[int]bool)
-  vertexQueue := []Vertex{start}
-  isDag = true
-  for len(vertexQueue) > 0 {
-    currVertex := vertexQueue[0]
-  }
-  return isDag
-}
