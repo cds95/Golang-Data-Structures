@@ -4,12 +4,11 @@ package collections
 
 import (
   "fmt"
-  "strconv"
 )
 
 type Stack struct {
   size int
-  elements []int
+  elements []interface{}
 }
 
 // Returns the size of the stack
@@ -24,16 +23,17 @@ func (s *Stack) IsEmpty() bool {
 }
 
 // Pushes a new value on to the top of the stack
-func (s *Stack) Push(val int) {
-  newSlice := []int{val}
+func (s *Stack) Push(val interface{}) {
+  var newSlice []interface{} = make([]interface{}, 1)
+  newSlice[0] = val
   s.elements = append(newSlice, s.elements...)
   s.size++
 }
 
 // Pops a value from the top of the stack and returns it
-func (s *Stack) Pop() (int, error) {
+func (s *Stack) Pop() (interface{}, error) {
   if s.IsEmpty() {
-    return 0, fmt.Errorf("Empty Stack")
+    return -1, fmt.Errorf("Empty Stack")
   }
   first := s.elements[0]
   s.elements = append(s.elements[:0], s.elements[1:]...)
@@ -43,10 +43,10 @@ func (s *Stack) Pop() (int, error) {
 
 // ToString method
 func (s *Stack) String() string {
-  res := "[" + strconv.Itoa(s.elements[0])
-  for i, num := range s.elements {
+  res := "[" + fmt.Sprintf("%v", s.elements[0])
+  for i, val := range s.elements {
     if i > 0 {
-      res += ", " + strconv.Itoa(num)
+      res += fmt.Sprintf(", %v", val)
     }
   }
   res += "]"
@@ -54,6 +54,6 @@ func (s *Stack) String() string {
 }
 
 // Returns the top value on the stack
-func (s *Stack) Peek() int {
+func (s *Stack) Peek() interface{} {
   return s.elements[0]
 }
