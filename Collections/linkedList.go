@@ -6,11 +6,10 @@ package collections
 
 import (
   "fmt"
-  "strconv"
 )
 
 type Node struct {
-  data int
+  data interface{}
   next *Node
 }
 
@@ -26,7 +25,7 @@ func (list *LinkedList) IsEmpty() bool {
 }
 
 // Adds a number to the end of the list
-func (list *LinkedList) Add(val int) {
+func (list *LinkedList) Add(val interface{}) {
   node := Node{data: val}
   if list.IsEmpty() {
     list.front = &node
@@ -41,7 +40,7 @@ func (list *LinkedList) Add(val int) {
 }
 
 // Returns the element at the index position
-func (list *LinkedList) Get(index int) (int, error){
+func (list *LinkedList) Get(index int) (interface{}, error){
   if index < 0 || index > list.Size {
     return -1, fmt.Errorf("Index out of bound exception")
   }
@@ -55,7 +54,7 @@ func (list *LinkedList) Get(index int) (int, error){
 // Adds an number at the specified index of the linked list.
 // Returns true if successful and false otherwise.  It will fail
 // if the given index is negative or more than the size
-func (list *LinkedList) AddAtIndex(val int, index int) bool {
+func (list *LinkedList) AddAtIndex(val interface{}, index int) bool {
   if index < 0 || index > list.Size {
     return false
   }
@@ -71,29 +70,14 @@ func (list *LinkedList) AddAtIndex(val int, index int) bool {
   return true
 }
 
-// Prints out the list
-func (list *LinkedList) Print() {
-  fmt.Print("[")
-  if !list.IsEmpty() {
-    fmt.Print(list.front.data)
-    curr := list.front
-    for curr.next != nil {
-      fmt.Printf(", %v", curr.next.data)
-      curr = curr.next
-    }
-
-  }
-  fmt.Println("]")
-}
-
 // Linked list to string method
 func (list *LinkedList) String() string {
   result := "["
   if !list.IsEmpty() {
-    result += strconv.Itoa(list.front.data)
+    result += fmt.Sprintf("%v", list.front.data)
     curr := list.front
     for curr.next != nil {
-      result += ", " + strconv.Itoa(curr.next.data)
+      result += fmt.Sprintf(", %v", curr.next.data)
       curr = curr.next
     }
 
@@ -104,7 +88,7 @@ func (list *LinkedList) String() string {
 
 // Checks to see whether or not the list contains a given number
 // Returns true if it contains it and false otherwise
-func (list *LinkedList) Contains(val int) bool {
+func (list *LinkedList) Contains(val interface{}) bool {
   if list.IsEmpty() {
     return false
   }
@@ -120,7 +104,7 @@ func (list *LinkedList) Contains(val int) bool {
 }
 
 // Removes a number from the linked list
-func (list *LinkedList) Delete(val int) bool {
+func (list *LinkedList) Delete(val interface{}) bool {
   for list.front.data == val {
     list.front = list.front.next
   }
