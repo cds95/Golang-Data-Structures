@@ -35,6 +35,46 @@ func TestAddToPartially(t *testing.T) {
   }
 }
 
+// Tests adding to index 0 when list is empty
+func TestAddAtIndexEmpty(t *testing.T) {
+  list := new(LinkedList)
+  list.AddAtIndex(1, 0)
+  if list.Size != 1 {
+    t.Errorf("Expected size %v, Got %v", 1, list.Size)
+  }
+  if val, err := list.Get(0); val != 1 || err != nil {
+    t.Errorf("Expected front value to be %v, Got %v", 1, val)
+  }
+}
+
+// Tests adding at an index
+func TestAddAtIndex(t *testing.T) {
+  expected := []int{1, 2, 3, 4}
+  list := new(LinkedList)
+  list.Add(1)
+  list.Add(2)
+  list.Add(4)
+  list.AddAtIndex(3, 2)
+  for i := 0; i < list.Size; i++ {
+    val, err := list.Get(i)
+    if err != nil || val != expected[i] {
+      t.Errorf("Numbers don't match.  Expected %v, Got %v", list, expected)
+    }
+  }
+}
+
+// Tests adding at an index larger than size of list
+func TestAddOutOfBounds(t *testing.T) {
+  list := new(LinkedList)
+  list.Add(1)
+  list.Add(2)
+  list.Add(3)
+  err := list.AddAtIndex(1, 10)
+  if err == nil {
+    t.Errorf("Error not found")
+  }
+}
+
 /*
   Tests get on an empty list
 */

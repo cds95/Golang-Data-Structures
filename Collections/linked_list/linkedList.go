@@ -67,9 +67,9 @@ func (list *LinkedList) Set(index int, val int) error {
 // Adds an number at the specified index of the linked list.
 // Returns true if successful and false otherwise.  It will fail
 // if the given index is negative or more than the size
-func (list *LinkedList) AddAtIndex(val int, index int) bool {
+func (list *LinkedList) AddAtIndex(val int, index int) error {
   if index < 0 || index > list.Size {
-    return false
+    return fmt.Errorf("Index out of bounds")
   }
   node := Node{data: val}
   if index == 0 {
@@ -86,7 +86,7 @@ func (list *LinkedList) AddAtIndex(val int, index int) bool {
     curr.next.next = temp
   }
   list.Size++
-  return true
+  return nil
 }
 
 // Linked list to string method
