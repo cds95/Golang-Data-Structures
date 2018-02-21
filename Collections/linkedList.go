@@ -72,13 +72,19 @@ func (list *LinkedList) AddAtIndex(val int, index int) bool {
     return false
   }
   node := Node{data: val}
-  curr := list.front
-  for i := 0; i < index - 1; i++ {
-    curr = curr.next
+  if index == 0 {
+    temp := list.front
+    list.front = &node
+    list.front.next = temp
+  } else {
+    curr := list.front
+    for i := 0; i < index - 1; i++ {
+      curr = curr.next
+    }
+    temp := curr.next
+    curr.next = &node
+    curr.next.next = temp
   }
-  temp := curr.next
-  curr.next = &node
-  curr.next.next = temp
   list.Size++
   return true
 }
